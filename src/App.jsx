@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Clock from './Clock.jsx';
 
 class App extends Component {
 
@@ -25,10 +26,12 @@ class App extends Component {
                     Countdown to { this.state.deadline }
                 </div>
                 <div>
-                    <div className="Clock-days">14 days</div>
-                    <div className="Clock-hours">3 hours</div>
-                    <div className="Clock-minutes">15 miutes</div>
-                    <div className="Clock-seconds">20 seconds</div>
+                    < Clock 
+                        // PROPS CONTAINS DATA ACROSS APPLICATION:
+                        // ADDING SOMETHING TO PROPS:
+                        deadline={this.state.deadline} // with this line we passing information to Clock Component
+                        mojNumer={5}
+                    />
                 </div>
                 <div>
                     <input 
