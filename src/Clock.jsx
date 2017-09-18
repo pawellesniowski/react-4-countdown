@@ -15,23 +15,42 @@ class Clock extends Component {
         console.log('this.props: ', this.props);
     }
 
-    getTimeUntil(deadline){
-        const time = (Date.parse(deadline) - Date.parse(new Date())/1000);
-
-        // time to count     
-        
-        
+    componentWillMount(){
+        this.getTimeUntil(this.props.deadline);
     }
 
+    componentDidMount(){
+        setInterval(()=>{this.getTimeUntil(this.props.deadline)}, 1000);
+    }
+
+    leading0(num){
+        return num<10? '0'+num : num;
+    }
+
+    getTimeUntil(deadline){
+        const time = Date.parse(deadline) - Date.parse(new Date());
+
+        // time to count
+        const seconds = Math.floor((time/1000))%60; 
+        const minutes = Math.floor((time/(1000*60)))%60;     
+        const hours = Math.floor((time/(1000*60*60)))%24;
+        const days = Math.floor(time/(1000*60*60*24));
+
+        this.setState({
+            days,
+            hours,
+            minutes,
+            seconds
+        });  
+    }
 
     render(){
-        this.getTimeUntil(this.props.deadline);
         return(
             <div>
-                <div className="Clock-days">{} days</div>
-                <div className="Clock-hours">{this.state.hours} hours</div>
-                <div className="Clock-minutes">{this.state.minutes} miutes</div>
-                <div className="Clock-seconds">{this.getTimeUntil.seconds} seconds</div>
+                <div className="Clock-days">{this.leading0(this.state.days)} days</div>
+                <div className="Clock-hours">{this.leading0(this.state.hours)} hours</div>
+                <div className="Clock-minutes">{this.leading0(this.state.minutes)} miutes</div>
+                <div className="Clock-seconds">{this.leading0(this.state.seconds)} seconds</div>
             </div>
         );
 
